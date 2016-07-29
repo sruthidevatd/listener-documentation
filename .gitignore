@@ -1,0 +1,8 @@
+.vagrant
+_book
+node_modules
+
+env.json
+book.pdf
+book.epub
+book.mobi

@@ -1,0 +1,15 @@
+{
+  "name": "listener-documentation",
+  "version": "1.0.0",
+  "description": "Listener Documentation is all contained in this repository.",
+  "repository": {
+    "type": "git",
+    "url": "https://git.gitbook.com/gnomeontherun/listener.git"
+  },
+  "author": "Jeremy Wilken <jeremy.wilken@teradata.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gitbook-plugin-snippets": "^1.0.1",
+    "gitbook-plugin-versions": "^2.1.3"
+  }
+}

@@ -1,0 +1,26 @@
+{
+    "plugins": [
+        "versions",
+        "comment",
+        "github-buttons",
+        "snippets",
+        "ga"
+    ],
+    "pluginsConfig": {
+        "versions": {
+            "type": "branches",
+            "includeFilepath": false
+        },
+        "github-buttons": {
+            "repo": "teradata/listener-documentation",
+            "types": ["star", "watch"]
+        },
+        "snippets": {
+            "file": "snippets/snippets.properties"
+        },
+        "ga": {
+            "token": "UA-69207726-7",
+            "configuration": "auto"
+        }
+    }
+}
