@@ -2,7 +2,7 @@
     "plugins": [
         "versions",
         "comment",
-        "github-buttons",
+        "editlink",
         "snippets",
         "ga"
     ],
@@ -11,9 +11,10 @@
             "type": "branches",
             "includeFilepath": false
         },
-        "github-buttons": {
-            "repo": "teradata/listener-documentation",
-            "types": ["star", "watch"]
+        "editlink": {
+            "base": "https://github.com/Teradata/listener-documentation/edit/master",
+            "label": "Edit in GitHub",
+            "multilingual": false
         },
         "snippets": {
             "file": "snippets/snippets.properties"
