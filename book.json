@@ -4,7 +4,8 @@
         "comment",
         "editlink",
         "snippets",
-        "ga"
+        "ga",
+        "downloadpdf"
     ],
     "pluginsConfig": {
         "versions": {
@@ -22,6 +23,11 @@
         "ga": {
             "token": "UA-69207726-7",
             "configuration": "auto"
+        },
+        "downloadpdf": {
+            "base": "https://www.gitbook.com/download/pdf/book/teradata/listener",
+            "label": "Download PDF",
+            "multilingual": false
         }
     }
 }
