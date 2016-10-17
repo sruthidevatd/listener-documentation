@@ -116,3 +116,7 @@
   right: 10px;
   left: auto;
 }
+
+.markdown-section h1:first-of-type {
+  margin-top: 0;
+}
