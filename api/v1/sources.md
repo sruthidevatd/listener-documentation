@@ -316,7 +316,7 @@ Code | Meaning
 
 ## Delete a Source
 
-Only an owner can delete a source. When a source is deleted, its state is set to `0` and will not appear for users.
+Only an owner can delete a source. When a source is deleted, its state is set to `0` and will not appear for other users.
 
 #### Definition
 
