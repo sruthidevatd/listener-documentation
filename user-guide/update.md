@@ -22,7 +22,7 @@ The version number and release date appear under the card title.
 ## Viewing Release Notes
 
 1. Do one of the following:
- * To view Release Notes for the current or a newer version of Listener, click the **UPDATE** tab.
+ * To view Release Notes for the current or newer version of Listener, click the **UPDATE** tab.
  * To view Release Notes for a previous version of Listener, click the **ROLLBACK** tab.
 2. At the bottom of the card, click **VIEW RELEASE NOTES**.
 3. To close the Release Notes, click **VIEW RELEASE NOTES** again.
@@ -37,6 +37,6 @@ The version number and release date appear under the card title.
 ## Rolling Back Listener to a Previous Version
 
 1. Click the **ROLLBACK** tab. If you see a card with a **ROLLBACK** button, a previous version is available.
-2. In the card that shows the version you want to roll back to, click **ROLLBACK**.
+2. In the card that shows the version to which you want to roll back, click **ROLLBACK**.
 3. When prompted to confirm the installation, click **INSTALL NOW**.
 4. When a **Completed...** message appears, click **CLOSE**.
