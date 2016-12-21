@@ -1,6 +1,7 @@
 # Summary
 
 * [User Guide](user-guide/index.md)
+  * [Contributing to Listener Documentation](contributing/contributing-documentation.md)
   * [Supported Systems](user-guide/supported-systems.md)
   * [Dashboard](user-guide/dashboard.md)
   * [Create a Source](user-guide/create-source.md)
