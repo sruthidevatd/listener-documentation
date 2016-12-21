@@ -30,7 +30,7 @@ Your user permissions determine which options appear in the navigation panel. On
   * **TROUBLESHOOTING**: Solutions for common problems
   * **GLOSSARY**: Listener key concepts and descriptions
 
-**Note**: To suggest changes to documentation, see [Contributing to Listener Documentation](#contributing-to-listener-documentation)
+**Note**: To suggest changes to documentation, see [Contributing to Listener Documentation](#contributing-to-listener-documentation).
 
 From **Teradata Listener Documentation**, you can do the following:
  * Access documentation from the table of contents
