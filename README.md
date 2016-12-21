@@ -48,7 +48,7 @@ Teradata Listener enables you to easily start streaming data at scale to many sy
 
 All you need is a GitHub ID, and you can propose changes to the Listener documentation by doing the following:
 
-1. Complete the [Dedication to Public Domain Agreement (DPDA)](/contributing/CONTRIBUTING-DOCUMENTATION.md). It takes just a minute or two to complete the DPDA, and you complete it only once.
+1. Complete the [Dedication to Public Domain Agreement (DPDA)](/contributing/contributing-documentation.md). It takes just a minute or two to complete the DPDA, and you complete it only once.
 2. At the top of any documentation page, click **EDIT IN GITHUB**. 
 3. Click **Fork this repository and propose changes**.
 4. Make the desired changes and submit a pull request.
