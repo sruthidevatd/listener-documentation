@@ -20,7 +20,7 @@ Your user permissions determine which options appear in the navigation panel. On
 
 1. Do one of the following:
  * In the upper right, click the question mark button.
- * In your browser, go to: [https://docs.uda.io](https://docs.uda.io)
+ * In your browser, go to: [https://listener.docs.uda.io/](https://listener.docs.uda.io/)
 
   Listener displays a table of contents and the following documentation sections:
   * **USER GUIDE**: How to use the Listener GUI to create and manage sources and targets, configure system settings, view
