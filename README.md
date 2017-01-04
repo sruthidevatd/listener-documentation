@@ -1,3 +1,4 @@
+
 # Teradata Listener Documentation
 
 Teradata Listener enables you to easily start streaming data at scale to many systems, such as to Teradata, HDFS, Hbase, and Aster.
