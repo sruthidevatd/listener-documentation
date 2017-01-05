@@ -92,3 +92,50 @@ Increasing the `--replication-factor` will cause commit times to increase due to
 ```bash
 /opt/kafka/bin/kafka-topics.sh --zookeeper mesos_master1:2181,mesos_master2:2181,mesos_master3:2181/kafka --alter --topic source_topic_id --replication-factor 3
 ```
+
+### Common installation errors due to undiscovered floating IPs
+
+The installation may suddenly fail due to undiscovered floating IPs on Openstack.  Retry the installation if errors occur such as those found in the below examples.
+
+Error codes example 1
+
+```
+TASK: [Creating nodes] ********************************************************
+failed: [kafka1] =>
+{"failed": true}
+
+msg: Unable to create floating ip: Floating IP pool not found. (HTTP 404) (Request-ID: req-38094325-e656-4aa8-bb12-56f64d68fd77)
+failed: [master1] =>
+{"failed": true}
+
+msg: Unable to create floating ip: Floating IP pool not found. (HTTP 404) (Request-ID: req-8c36dfb3-f305-4cf5-a17f-6dca85e0e4d1)
+failed: [slave4] =>
+{"failed": true}
+
+msg: Unable to create floating ip: Floating IP pool not found. (HTTP 404) (Request-ID: req-3a29e500-3c8f-4cc2-8e8d-3f6aa8570452)
+failed: [slave2] =>
+{"failed": true}
+
+msg: Unable to create floating ip: Floating IP pool not found. (HTTP 404) (Request-ID: req-8fbb5eba-da1e-45f3-b04b-8cad0d40220a)
+changed: [slave3]
+changed: [slave1]
+changed: [haproxy1]
+```
+
+Error codes example 2
+
+```
+skipping: [haproxy1]
+failed: [slave2] =>
+{"elapsed": 300, "failed": true}
+
+msg: Timeout when waiting for search string OpenSSH in ['10.25.59.119']:22
+failed: [slave4] =>
+{"elapsed": 300, "failed": true}
+
+msg: Timeout when waiting for search string OpenSSH in ['10.25.59.118']:22
+failed: [master1] =>
+{"elapsed": 300, "failed": true}
+
+msg: Timeout when waiting for search string OpenSSH in ['10.25.59.117']:22
+```

@@ -1,4 +1,4 @@
-Example Teradata table DDL
+# Teradata table DDL Example
 
 ## Varchar Table
 ```sql

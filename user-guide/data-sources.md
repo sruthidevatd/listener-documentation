@@ -26,10 +26,10 @@ Lists sources that match the name entry.
 ### 1H, 1D, 7D, 1M
 
 Activity for all or filtered sources for one of the following time periods:
-- **1H**: 1 Hour
-- **1D**: 1 Day
-- **7D**: 7 Days
-- **1M**: 1 Month
+- **1H** (1 Hour)
+- **1D** (1 Day)
+- **7D** (7 Days)
+- **1M** (1 Month)
 
 ## Filtering Sources
 

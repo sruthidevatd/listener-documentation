@@ -48,4 +48,4 @@ Teradata Listener enables you to easily start streaming data at scale to many sy
 
 ---
 
-Copyright &copy; 2016 by Teradata. All rights reserved.
+Copyright &copy; 2017 by Teradata. All rights reserved.

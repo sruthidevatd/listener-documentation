@@ -141,7 +141,7 @@ Only users with administrative privileges will see the following **ADMIN** setti
 
 **Manage Sources**
 
-Add, lock, edit, and delete sources. For more information, see [Manage Sources](manage-sources.md).
+Add, edit, and delete sources. For more information, see [Manage Sources](manage-sources.md).
 
 **Manage Systems**
 

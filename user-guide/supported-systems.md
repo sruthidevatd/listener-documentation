@@ -1,4 +1,4 @@
-Listener version 1.00 supports the following systems:
+Listener supports the following systems:
 
 - Teradata 14.10 and later
 - HDFS 2.3-2.6
@@ -7,7 +7,12 @@ Listener version 1.00 supports the following systems:
 
 Future releases of Listener will support additional systems. 
 
-This section lists the properties required to connect to and store data on the supported systems.
+Listener supports the following message brokers for MQTT sources:
+
+- ActiveMQ 5.14.0
+- Mosquitto 1.3.4
+
+The following properties are required to connect to and store data on the supported systems.
 
 ## Teradata
 

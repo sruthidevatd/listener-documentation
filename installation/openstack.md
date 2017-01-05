@@ -1,5 +1,3 @@
-# Openstack
-
 # Openstack Requirements
 We recommend the following for a base installation. Your openstack administrator will be able to provide more guidance.
 

@@ -1,4 +1,3 @@
-## Consul
 Elastic Search data is backed up on the first three mesos-masters servers every day at 3:30 a.m. You can change the time of backup by modifying the job for consule-backup using Cron.
 
 ### Backup

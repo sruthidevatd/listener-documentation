@@ -20,7 +20,7 @@ Your user permissions determine which options appear in the navigation panel. On
 
 1. Do one of the following:
  * In the upper right, click the question mark button.
- * In your browser, go to: [https://listener.docs.uda.io/](https://listener.docs.uda.io/)
+ * In your browser, go to: [https://docs.uda.io](https://docs.uda.io)
 
   Listener displays a table of contents and the following documentation sections:
   * **USER GUIDE**: How to use the Listener GUI to create and manage sources and targets, configure system settings, view
@@ -29,8 +29,6 @@ Your user permissions determine which options appear in the navigation panel. On
   * **INSTALLATION**: How to install Listener, including prerequisites and infrastructure requirements
   * **TROUBLESHOOTING**: Solutions for common problems
   * **GLOSSARY**: Listener key concepts and descriptions
-
-**Note**: To suggest changes to documentation, see [Contributing to Listener Documentation](#contributing-to-listener-documentation).
 
 From **Teradata Listener Documentation**, you can do the following:
  * Access documentation from the table of contents
@@ -42,7 +40,7 @@ From **Teradata Listener Documentation**, you can do the following:
 
 #### Accessing Documentation from the Table of Contents
 
-1. In the table of contents, click the desired section. For example: **Dashboard**
+1. In the table of contents, click the desired section. For example: **1.2 Dashboard**.
 
 #### Accessing Documentation from the Section Buttons
 
@@ -62,33 +60,12 @@ From **Teradata Listener Documentation**, you can do the following:
 
 When you download documentation to a PDF file, it includes all documentation in the table of contents.
 
-1. In the upper right, click the download button. A preview of the PDF documentation appears in your browser. 
-2. In the PDF preview, click the download button. 
-3. Confirm **Save File** is selected, and click **OK**.
+1. In the upper left, click **DOWNLOAD PDF**. 
+2. Do one of the following: 
+ * Click **Save File** to download the PDF.
+ * Click **Open with** to open the PDF.
 
-#### Going Directly to the Glossary
-
-1. In the upper right, click the ↓AZ button. The **Glossary** of Listener key terms and concepts appears. 
- 
 ### Logging Out
 
 1. In the upper left, next to your user name, click the down arrow. The **Logout** option appears.
 2. Click **Logout**.
-
-## Contributing to Listener Documentation
-
-All you need is a GitHub ID, and you can propose changes to the Listener documentation by doing the following:
-
-1. Complete the [Dedication to Public Domain Agreement (DPDA)](CONTRIBUTING-DOCUMENTATION.md). It takes just a minute or two to complete the DPDA, and you complete it only once.
-2. At the top of any documentation page, click **EDIT IN GITHUB**. 
-3. Click **Fork this repository and propose changes**.
-4. Make the desired changes and submit a pull request.
-
-A Teradata team member will review any pull requests, confirm we received the DPDA from you, and merge all or parts of your suggested changes as soon as possible.  
-
-### GitHub Writing and Formatting Resources
-
-For help writing and formatting your comments, the following GitHub resources may be helpful:
-
-- [Basic Writing and Formatting Syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/)
-- [Printable Markdown Cheatsheet](https://services.github.com/kit/downloads/github-git-cheat-sheet.pdf)

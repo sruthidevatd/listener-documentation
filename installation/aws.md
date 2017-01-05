@@ -1,4 +1,3 @@
-# Amazon Web Services
 ## AWS prerequisites
 
 To deploy a Teradata Listener env on aws, you will need some key pieces of information

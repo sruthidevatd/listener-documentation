@@ -25,6 +25,8 @@ description | string  | `A superb source` | Metadata description of the source.
 secret      | string  | `f8a9f620-e0e6-470b-a6b8-1f16b003c034` | Secret key used when streaming data to the Ingest API.
 state       | string  | `1` | State of the source, enabled or disabled.
 production  | boolean | `false` | Production state of the source, which is set to true when an assigned target is locked.
+source_type | string  | `REST` | Type of the source, REST or MQTT. No value defaults to REST.
+subscription_info | object | `{"broker": "http://localhost:1234", "topic": "My MQTT topic"}` | MQTT subscription information containing broker URL and topic. Applicable only if source type is MQTT.
 
 The properties *source_id*, *created_at*, *created_by*, *updated_at*, *updated_by* and *secret* are assigned by the Teradata Listener API at the moment of creation and are __Read-Only__.
 
@@ -79,7 +81,47 @@ Content-Type: application/json
     "name": "My source",
     "description": "A superb source",
     "state": 1,
-    "production": false
+    "production": false,
+    "source_type": "REST"
+  },
+  {
+    "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c29",
+    "owner": ["jd123456"],
+    "created_at": "2015-07-04T10:21:00Z",
+    "created_by": "av012345",
+    "updated_at": "2015-12-20T10:21:00Z",
+    "updated_by": "jd123456",
+    "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c035",
+    "name": "My other source",
+    "description": "Another superb source",
+    "state": 1,
+    "production": false,
+    "source_type": "MQTT",
+    "subscription_info": {
+      "broker": "http://localhost:1234",
+      "topic": "My MQTT topic",
+      "state": "connected"
+    }
+  },
+  {
+    "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c30",
+    "owner": ["jd123456"],
+    "created_at": "2015-07-04T10:22:00Z",
+    "created_by": "av012345",
+    "updated_at": "2015-12-20T10:22:00Z",
+    "updated_by": "jd123456",
+    "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c036",
+    "name": "My other source 2",
+    "description": "Another superb source 2",
+    "state": 1,
+    "production": false,
+    "source_type": "MQTT",
+    "subscription_info": {
+      "broker": "http://localhost:1235",
+      "topic": "My MQTT topic 2",
+      "state": "disconnected",
+      "reason": "Error connecting to subscriber or no subscriptions found."
+    }
   },
   ...
 ]
@@ -90,7 +132,7 @@ Content-Type: application/json
 Code | Meaning
 ---- | -------
 201  | Sources were returned successfully.
-401_STATUS
+401  | 401_STATUS
 
 ## Get a Source
 
@@ -112,7 +154,7 @@ curl \
   https://listener-app-services.teradata.com/v1/sources/758fbda4-accc-4f90-8f09-cc0a164c8c28
 ```
 
-#### Example Response
+#### Example REST Source Response
 
 ```http
 HTTP/1.1 200 OK
@@ -130,7 +172,36 @@ Content-Type: application/json
   "name": "My source",
   "description": "A superb source",
   "state": 1,
-  "production": false
+  "production": false,
+  "source_type": "REST"
+}
+```
+
+#### Example MQTT Source Response
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
+```json
+{
+  "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c29",
+  "owner": ["jd123456"],
+  "created_at": "2015-07-04T10:21:00Z",
+  "created_by": "av012345",
+  "updated_at": "2015-12-20T10:21:00Z",
+  "updated_by": "jd123456",
+  "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c035",
+  "name": "My other source",
+  "description": "Another superb source",
+  "state": 1,
+  "production": false,
+  "source_type": "MQTT",
+  "subscription_info": {
+    "broker": "http://localhost:1234",
+    "topic": "My MQTT topic",
+    "state": "connected"
+  }
 }
 ```
 
@@ -139,12 +210,14 @@ Content-Type: application/json
 Code | Meaning
 ---- | -------
 201  | Source was returned successfully.
-401_STATUS
+401  | 401_STATUS
 404  | 404_STATUS
 
 ## Create a Source
 
 To create a new Source, provide a JSON object of the properties for the new source. If read-only properties are supplied, they will be ignored.
+
+**Note:** MQTT sources have been validated against ActiveMQ 5.14.0 and Mosquitto 1.3.4.
 
 #### Definition
 
@@ -152,7 +225,7 @@ To create a new Source, provide a JSON object of the properties for the new sour
 POST https://listener-app-services.teradata.com/v1/sources HTTP/1.1
 ```
 
-#### Example Request
+#### Example REST Source Request
 
 ```bash
 curl \
@@ -161,13 +234,34 @@ curl \
   -X POST \
   -d '{
     "name": "My source",
-    "description": "A superb source"
+    "description": "A superb source",
+    "source_type": "REST"
   }' \
   -i \
   https://listener-app-services.teradata.com/v1/sources
 ```
 
-#### Example Response
+#### Example MQTT Source Request
+
+```bash
+curl \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -X POST \
+  -d '{
+    "name": "My source",
+    "description": "A superb source",
+    "source_type": "MQTT",
+    "subscription_info": {
+      "broker": "http://localhost:1234",
+      "topic": "My MQTT topic"
+    }
+  }' \
+  -i \
+  https://listener-app-services.teradata.com/v1/sources
+```
+
+#### Example REST Source Response
 
 ```http
 HTTP/1.1 200 OK
@@ -185,7 +279,35 @@ Content-Type: application/json
   "name": "My source",
   "description": "A superb source",
   "state": 1,
-  "production": false
+  "production": false,
+  "source_type": "REST"
+}
+```
+
+#### Example MQTT Source Response
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
+```json
+{
+  "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c28",
+  "owner": ["jd123456"],
+  "created_at": "2015-07-04T10:20:00Z",
+  "created_by": "av012345",
+  "updated_at": "2015-12-20T10:20:00Z",
+  "updated_by": "jd123456",
+  "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c034",
+  "name": "My source",
+  "description": "A superb source",
+  "state": 1,
+  "production": false,
+  "source_type": "MQTT",
+  "subscription_info": {
+    "broker": "http://localhost:1234",
+    "topic": "My MQTT topic"
+  }
 }
 ```
 
@@ -195,7 +317,7 @@ Code | Meaning
 ---- | -------
 201  | Source was created successfully.
 400  | A required property is missing from the request.
-401_STATUS
+401  | 401_STATUS
 
 ## Update a Source
 
@@ -207,7 +329,7 @@ To update a source, send a JSON object with updated values for one or more of th
 PATCH https://listener-app-services.teradata.com/v1/sources/{source_id} HTTP/1.1
 ```
 
-#### Example Request
+#### Example REST Source Request
 
 ```bash
 curl \
@@ -224,13 +346,65 @@ curl \
     "name": "My source",
     "description": "A superb source",
     "state": 1,
-    "production": false
+    "production": false,
+    "source_type": "REST"
   }' \
   -i \
   https://listener-app-services.teradata.com/v1/sources/758fbda4-accc-4f90-8f09-cc0a164c8c28
 ```
 
-#### Example Response
+#### Example MQTT Source Request
+
+```bash
+curl \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -X PATCH \
+  -d '{
+    "owner": ["jd123456"],
+    "created_at": "2015-07-04T10:20:00Z",
+    "created_by": "av012345",
+    "updated_at": "2015-12-20T10:20:00Z",
+    "updated_by": "jd123456",
+    "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c034",
+    "name": "My source",
+    "description": "A superb source",
+    "state": 1,
+    "production": false,
+    "source_type": "MQTT",
+    "subscription_info": {
+      "broker": "http://localhost:1234",
+      "topic": "My MQTT topic"
+    }
+  }' \
+  -i \
+  https://listener-app-services.teradata.com/v1/sources/758fbda4-accc-4f90-8f09-cc0a164c8c28
+```
+
+#### Example REST Source Response
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
+```json
+{
+  "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c28",
+  "owner": ["jd123456"],
+  "created_at": "2015-07-04T10:20:00Z",
+  "created_by": "av012345",
+  "updated_at": "2015-12-20T10:20:00Z",
+  "updated_by": "jd123456",
+  "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c034",
+  "name": "My source",
+  "description": "A superb source",
+  "state": 1,
+  "production": false,
+  "source_type": "REST"
+}
+```
+
+#### Example MQTT Source Response
 
 ```http
 HTTP/1.1 200 OK
@@ -249,6 +423,11 @@ Content-Type: application/json
   "description": "A superb source",
   "state": 1,
   "production": false
+  "source_type": "MQTT",
+  "subscription_info": {
+    "broker": "http://localhost:1234",
+    "topic": "My MQTT topic"
+  }
 }
 ```
 
@@ -258,12 +437,13 @@ Code | Meaning
 ---- | -------
 201  | Source was updated successfully.
 400  | A required property is missing from the request.
-401_STATUS
+401  | 401_STATUS
 404  | 404_STATUS
 
 ## Regenerate Source Secret Key
 
 The source secret key is a private key to ensure only the desired data is ingested for a source. If the secret key is compromised, you can regenerate the secret key to replace the existing key.
+Note that the source secret key is only available for REST sources (source_type of "REST" or null).
 
 #### Definition
 
@@ -300,7 +480,8 @@ Content-Type: application/json
   "name": "My source",
   "description": "A superb source",
   "state": 1,
-  "production": false
+  "production": false,
+  "source_type": "REST"
 }
 ```
 
@@ -309,14 +490,14 @@ Content-Type: application/json
 Code | Meaning
 ---- | -------
 201  | Source was created.
-400  | A required property is missing from the request.
-401_STATUS
+400  | A required property is missing from the request or the source type is not supported.
+401  | 401_STATUS
 403  | Cannot regenerate because source or target is locked.
 404  | 404_STATUS
 
 ## Delete a Source
 
-Only an owner can delete a source. When a source is deleted, its state is set to `0` and will not appear for other users.
+Only an owner can delete a source. When a source is deleted, its state is set to `0` and will not appear for users.
 
 #### Definition
 
@@ -347,5 +528,5 @@ Code | Meaning
 ---- | -------
 204  | Source was deleted successfully.
 400  | Cannot delete a source associated with a target.
-401_STATUS
+401  | 401_STATUS
 404  | 404_STATUS

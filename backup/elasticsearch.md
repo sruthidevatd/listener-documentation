@@ -1,4 +1,3 @@
-## Elastic Search
 Elastic Search data is backed up on the first three mesos-slave servers everyday at 3:30 a.m. You can change the time of backup by modifying the job for elastic-dump using Cron.
 
 ### Backup
