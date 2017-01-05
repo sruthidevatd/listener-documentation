@@ -30,7 +30,7 @@ Ensure Hcatalog is set up correctly and that port 50111 is open to Hcatalog.
 
 ---
 __Problem__:
-Target is stuck in deploy mode.
+Target is stuck in deploy mode, or the following error message appears when trying to create a target: "Resources are exhausted. Contact your administrator."
 
 __Solution__:
 Ensure there are enough resources to deploy a new target.
