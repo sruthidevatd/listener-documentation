@@ -42,7 +42,7 @@ From **Teradata Listener Documentation**, you can do the following:
 
 #### Accessing Documentation from the Table of Contents
 
-1. In the table of contents, click the desired section. For example: **1.2 Dashboard**.
+1. In the table of contents, click the desired section. For example: **Dashboard**.
 
 #### Accessing Documentation from the Section Buttons
 
