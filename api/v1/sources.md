@@ -25,8 +25,6 @@ description | string  | `A superb source` | Metadata description of the source.
 secret      | string  | `f8a9f620-e0e6-470b-a6b8-1f16b003c034` | Secret key used when streaming data to the Ingest API.
 state       | string  | `1` | State of the source, enabled or disabled.
 production  | boolean | `false` | Production state of the source, which is set to true when an assigned target is locked.
-source_type | string  | `REST` | Type of the source, REST or MQTT. No value defaults to REST.
-subscription_info | object | `{"broker": "http://localhost:1234", "topic": "My MQTT topic"}` | MQTT subscription information containing broker URL and topic. Applicable only if source type is MQTT.
 
 The properties *source_id*, *created_at*, *created_by*, *updated_at*, *updated_by* and *secret* are assigned by the Teradata Listener API at the moment of creation and are __Read-Only__.
 
@@ -95,13 +93,7 @@ Content-Type: application/json
     "name": "My other source",
     "description": "Another superb source",
     "state": 1,
-    "production": false,
-    "source_type": "MQTT",
-    "subscription_info": {
-      "broker": "http://localhost:1234",
-      "topic": "My MQTT topic",
-      "state": "connected"
-    }
+    "production": false
   },
   {
     "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c30",
@@ -114,14 +106,7 @@ Content-Type: application/json
     "name": "My other source 2",
     "description": "Another superb source 2",
     "state": 1,
-    "production": false,
-    "source_type": "MQTT",
-    "subscription_info": {
-      "broker": "http://localhost:1235",
-      "topic": "My MQTT topic 2",
-      "state": "disconnected",
-      "reason": "Error connecting to subscriber or no subscriptions found."
-    }
+    "production": false
   },
   ...
 ]
@@ -177,34 +162,6 @@ Content-Type: application/json
 }
 ```
 
-#### Example MQTT Source Response
-
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-```
-```json
-{
-  "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c29",
-  "owner": ["jd123456"],
-  "created_at": "2015-07-04T10:21:00Z",
-  "created_by": "av012345",
-  "updated_at": "2015-12-20T10:21:00Z",
-  "updated_by": "jd123456",
-  "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c035",
-  "name": "My other source",
-  "description": "Another superb source",
-  "state": 1,
-  "production": false,
-  "source_type": "MQTT",
-  "subscription_info": {
-    "broker": "http://localhost:1234",
-    "topic": "My MQTT topic",
-    "state": "connected"
-  }
-}
-```
-
 #### Response Codes
 
 Code | Meaning
@@ -217,7 +174,6 @@ Code | Meaning
 
 To create a new Source, provide a JSON object of the properties for the new source. If read-only properties are supplied, they will be ignored.
 
-**Note:** MQTT sources have been validated against ActiveMQ 5.14.0 and Mosquitto 1.3.4.
 
 #### Definition
 
@@ -236,26 +192,6 @@ curl \
     "name": "My source",
     "description": "A superb source",
     "source_type": "REST"
-  }' \
-  -i \
-  https://listener-app-services.teradata.com/v1/sources
-```
-
-#### Example MQTT Source Request
-
-```bash
-curl \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer TOKEN" \
-  -X POST \
-  -d '{
-    "name": "My source",
-    "description": "A superb source",
-    "source_type": "MQTT",
-    "subscription_info": {
-      "broker": "http://localhost:1234",
-      "topic": "My MQTT topic"
-    }
   }' \
   -i \
   https://listener-app-services.teradata.com/v1/sources
@@ -281,33 +217,6 @@ Content-Type: application/json
   "state": 1,
   "production": false,
   "source_type": "REST"
-}
-```
-
-#### Example MQTT Source Response
-
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-```
-```json
-{
-  "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c28",
-  "owner": ["jd123456"],
-  "created_at": "2015-07-04T10:20:00Z",
-  "created_by": "av012345",
-  "updated_at": "2015-12-20T10:20:00Z",
-  "updated_by": "jd123456",
-  "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c034",
-  "name": "My source",
-  "description": "A superb source",
-  "state": 1,
-  "production": false,
-  "source_type": "MQTT",
-  "subscription_info": {
-    "broker": "http://localhost:1234",
-    "topic": "My MQTT topic"
-  }
 }
 ```
 
@@ -353,34 +262,6 @@ curl \
   https://listener-app-services.teradata.com/v1/sources/758fbda4-accc-4f90-8f09-cc0a164c8c28
 ```
 
-#### Example MQTT Source Request
-
-```bash
-curl \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer TOKEN" \
-  -X PATCH \
-  -d '{
-    "owner": ["jd123456"],
-    "created_at": "2015-07-04T10:20:00Z",
-    "created_by": "av012345",
-    "updated_at": "2015-12-20T10:20:00Z",
-    "updated_by": "jd123456",
-    "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c034",
-    "name": "My source",
-    "description": "A superb source",
-    "state": 1,
-    "production": false,
-    "source_type": "MQTT",
-    "subscription_info": {
-      "broker": "http://localhost:1234",
-      "topic": "My MQTT topic"
-    }
-  }' \
-  -i \
-  https://listener-app-services.teradata.com/v1/sources/758fbda4-accc-4f90-8f09-cc0a164c8c28
-```
-
 #### Example REST Source Response
 
 ```http
@@ -401,33 +282,6 @@ Content-Type: application/json
   "state": 1,
   "production": false,
   "source_type": "REST"
-}
-```
-
-#### Example MQTT Source Response
-
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-```
-```json
-{
-  "source_id": "758fbda4-accc-4f90-8f09-cc0a164c8c28",
-  "owner": ["jd123456"],
-  "created_at": "2015-07-04T10:20:00Z",
-  "created_by": "av012345",
-  "updated_at": "2015-12-20T10:20:00Z",
-  "updated_by": "jd123456",
-  "secret": "f8a9f620-e0e6-470b-a6b8-1f16b003c034",
-  "name": "My source",
-  "description": "A superb source",
-  "state": 1,
-  "production": false
-  "source_type": "MQTT",
-  "subscription_info": {
-    "broker": "http://localhost:1234",
-    "topic": "My MQTT topic"
-  }
 }
 ```
 

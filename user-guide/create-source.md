@@ -7,7 +7,6 @@ If you are using LDAP, Listener associates each source with an owner or owners. 
 3.  Under **Source Description**, enter a description, up to 5000 characters. For example: `Clickstream data from our corporate website`
 4. Select the **Source Type**.
  * To send messages to RESTful sources using the [Ingest API](../api/vi/sources.md), select **REST**.
- * To subscribe to an [MQTT broker](../api/vi/sources.md), select **MQTT** and specify the **Broker** and **Topic**. 
  
 5. [Optional] If Listener is using LDAP, do either of the following:
  * To add additional owners, click the **Owner(s)** box, start typing the user's LDAP username, and click the username when it appears.

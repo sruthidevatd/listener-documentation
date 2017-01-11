@@ -76,20 +76,7 @@ __Problem__:
 Ingest Services does not deploy properly and throws a `503` error.
 
 __Solution__:
-When Ingest starts, it checks for sources in Elasticsearch and throws an error if it does not find any sources. Create a source and restart Ingest. 
-
-## MQTT
-__Problem__:
-Messages are not getting to the source.
-
-__Solution__:
-Ensure the topic is valid.
-
-__Problem__:
-State of the source indicates a bad broker.
-
-__Solution__:
-Check for network blocks from MQTT to listener.
+When Ingest starts, it checks for sources in Elasticsearch and throws an error if it does not find any sources. Create a source and restart Ingest.
 
 ## Sources
 

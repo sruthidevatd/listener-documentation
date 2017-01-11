@@ -1,3 +1,0 @@
-Listener allows you to subscribe to an MQTT broker. For information about creating MQTT sources, see the following:
- * [Create Source](create-source.md)
- * [API Source Information](../api/vi/sources.md)

@@ -5,12 +5,7 @@ Listener supports the following systems:
 - HBase 1.1.2
 - Aster 6.10
 
-Future releases of Listener will support additional systems. 
-
-Listener supports the following message brokers for MQTT sources:
-
-- ActiveMQ 5.14.0
-- Mosquitto 1.3.4
+Future releases of Listener will support additional systems.
 
 The following properties are required to connect to and store data on the supported systems.
 
