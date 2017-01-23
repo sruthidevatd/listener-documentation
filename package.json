@@ -4,9 +4,9 @@
   "description": "Listener Documentation is all contained in this repository.",
   "repository": {
     "type": "git",
-    "url": "https://git.gitbook.com/gnomeontherun/listener.git"
+    "url": "https://git.gitbook.com/teradata/listener.git"
   },
-  "author": "Jeremy Wilken <jeremy.wilken@teradata.com>",
+  "author": "Jason Weaver <jason.weaver@teradata.com>",
   "license": "MIT",
   "dependencies": {
     "gitbook-plugin-snippets": "^1.0.1",
