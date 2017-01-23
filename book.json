@@ -14,7 +14,7 @@
             "includeFilepath": false
         },
         "editlink": {
-            "base": "https://github.com/Teradata/listener-documentation/edit/master",
+            "base": "https://github.com/Teradata/listener-documentation/edit/release--01.01.00.424",
             "label": "Edit in GitHub",
             "multilingual": false
         },
