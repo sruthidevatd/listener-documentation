@@ -1,3 +1,4 @@
+
 ### When creating openstack VMs, floating ip pool not found.
 
 Error: `Unable to create floating ip: FloatingIpPoolNotFound: Floating ip pool not found.`
