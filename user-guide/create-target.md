@@ -54,6 +54,6 @@ The **New Target** view appears.
 
 ### Target Table Examples
 
-[Aster](examples/aster.md)
-[Teradata](examples/teradata.md)
-[Streamer](examples/streamer.md)
+* [Aster](examples/aster.md)
+* [Teradata](examples/teradata.md)
+* [Streamer](examples/streamer.md)
