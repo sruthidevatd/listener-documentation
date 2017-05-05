@@ -13,6 +13,7 @@ Targets are the entities that process a stream from a source and manage how that
 * [Pause a Target](#pause-a-target)
 * [Get Target Status](#get-target-status)
 * [Validate a Target](#validate-a-target)
+* [Retrieve Dead Letter Records](#retrieve-dead-letter-records)
 
 ## Target Object
 
@@ -38,8 +39,10 @@ production      | boolean | `false` | Production state of the target. When enabl
 bundle          | boolean | `true` | Flag to indicate the target is batched (`true`) or realtime (`false`).
 bundle_type     | records | `records` | When batch mode, declare mode using `records`. Other modes may be supported later.
 bundle_interval | integer | `200` | When batch mode, declare the number of records during a batch.
-data_map        | object  | `{ "mapping":[{"field": "uuid", "column": "uuid", "type": "varchar"}] }` | Mapping of target fields to system columns with a column type.
+data_map        | object  | `{ "mapping":[{"field": "uuid", "column": "uuid", "type": "varchar"}] }` | Describes how to map target fields to system columns.
 properties      | object  | `{"webhcat_table": "listener"}` | Additional properties for some target types.
+use\_dead\_letter\_queue | boolean | `true` | Whether to move "bad" records to a separate queue (`true`) or not (`false`).
+dead\_letter\_queue | string | `b37979f6-b712-4d81-990e-9556a3c0e94b-dlq` | Name of the queue used to store failed records.
 
 The properties *target_id*, *created_at*, *created_by*, *updated_at*, and *updated_by* are assigned by the Teradata Listener API at the moment of creation and are __Read-Only__.
 
@@ -51,9 +54,18 @@ The property *production* is governed by TBD and is __Read-Only__.
 
 The property *state* can be changed only by deleting an item.
 
+The property *dead\_letter\_queue* is __Read-Only__ and automatically populated if a target is configured with a *use\_dead\_letter\_queue* value of *true*.
+
 ## Target Mapping
 
 Targets that support a database column structure can map fields from Listener to specific columns. All targets, except HDFS types, support mapping fields.
+
+The mapping of data to columns can take one of two forms
+
+1. Passthrough mapping
+2. Shredding mapping
+
+### Passthrough Mapping
 
 Listener wraps messages with additional metadata that you can map and store in your target. The following four fields can be mapped:
 
@@ -74,8 +86,6 @@ timestamp | timestamp
 id        | varchar
 
 The `data_map.mapping` array takes an object with three properties, `column`, `field`, and `type`. All three must be specified to validate. If you do not want to map a particular field, leave the object out of the array. Using the fields and the columns above, mapping would be defined in a target like the following example.
-
-### Target Mapping Example
 
 ```json
 {
@@ -102,6 +112,57 @@ The `data_map.mapping` array takes an object with three properties, `column`, `f
   }
 }
 ```
+
+### Shredding Mapping
+
+Listener ingests `JSON` data, the nature of `JSON` data allows for easy parsing and the potential to map from `JSON` field names to database columns. This functionality is exposed in Listener through the `data_map.mapping_type`.
+
+```json
+{
+  "data_map": {
+    "mapping_type" : "auto_shred"
+  }
+}
+```
+
+If a target is configured with `auto_shred` and a user provides the following `JSON`
+
+```json
+{
+  "country" : "France",
+  "population" : 66991000,
+  "famous_for" : ["Wine", "Cheese"],
+  "religions" : {
+    "Christian" : 63,
+	"None" : 25,
+	"Muslim" : 9,
+	"Other" : 3,
+  },
+  "monarch" : null
+}
+```
+
+The writer process will parse the provided JSON and make the following fields and values available for binding to the target database table.
+
+Field        | Type        | Contents
+-----        | ----        | ----
+country      | Parsed      | "France"
+population   | Parsed      | 66991000
+famous\_for  | Parsed      | "[\"Wine\",\"Cheese\"]"
+religions    | Parsed      | "{\"Christian\": 63, \"None\": 25, \"Muslim\": 9, \"Other\": 3}"
+monarch      | Parsed      | null
+data         | Listener    | Field with the raw data sent to Ingest.
+source_id    | Listener    | ID for the source to which the packet was sent.
+time         | Listener    | Time the packet was ingested.
+uuid         | Listener    | UUID that gets assigned to the packet upon arrival.
+
+The binding of values happens by examining the name of each column in the database table and finding the corresponding ```JSON``` field by comparing names. For example
+
+Table Column  | Value                       | Explanation
+---           | ---                         | ---
+COUNTRY       | France                      | Matches `country` field through case insensitive comparison
+UUID          | UUID associated with packet | Matches `uuid` field through case insensitive comparison
+timezone      | null                        | No value in fields so defaults to null
 
 ## Target Types
 
@@ -786,3 +847,33 @@ Code | Meaning
 200  | Target details are valid.
 400  | Validation failed due to missing or incorrect details.
 401_STATUS
+
+## Retrieve Dead Letter records
+
+If a target has been configured to store bad records in a ```dead letter queue``` then you can retrieve the bad records through the API.
+
+This functionality is currently restricted to the owner of the target and the system admin user.
+
+#### Definition
+
+```http
+GET https://listener-app-services.teradata.com/v1/targets/{target_id}/dead-letter-queue/records HTTP/1.1
+```
+
+### Example Response
+
+```http
+HTTP/1.1 200 OK
+```
+```json
+[
+  "{\"missing_json_value\" : }"
+]
+```
+
+### Response Codes
+
+Code | Meaning
+---- | -------
+200  | Successfully retrieved records
+403  | User does not have permission to retrieve records

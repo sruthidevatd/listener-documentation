@@ -17,16 +17,16 @@ Property    | Type    | Example | Description
 source_id   | string  | `758fbda4-accc-4f90-8f09-cc0a164c8c28` | ID of the Source in the form of a UUID.
 owner       | array   | `["jd123456"]` | Array of user IDs who have owner permissions on the source.
 created_at  | string  | `2015-07-04T10:20:00Z` | Timestamp of moment of creation.
-created_by  | string  | `av012345` | ID of user that created the source.
+created_by  | string  | `av012345` | ID of user who created the source.
 updated_at  | string  | `2015-12-25T10:20:00Z` | Timestamp of moment of creation.
-updated_by  | string  | `jd123456` | ID of user that last updated the source.
+updated_by  | string  | `jd123456` | ID of user who last updated the source.
 name        | string  | `My source` | Name of the source.
 description | string  | `A superb source` | Metadata description of the source.
 secret      | string  | `f8a9f620-e0e6-470b-a6b8-1f16b003c034` | Secret key used when streaming data to the Ingest API.
 state       | string  | `1` | State of the source, enabled or disabled.
 production  | boolean | `false` | Production state of the source, which is set to true when an assigned target is locked.
 source_type | string  | `REST` | Type of the source, REST or MQTT. No value defaults to REST.
-subscription_info | object | `{"broker": "http://localhost:1234", "topic": "My MQTT topic"}` | MQTT subscription information containing broker URL and topic. Applicable only if source type is MQTT.
+subscription_info | object | `{"broker": "ssl://localhost:8883", "topic": "My MQTT topic", "private_key" : \"XX...\", "certificate : \"YY...\"}` | MQTT subscription information containing broker URL, topic and optionally a private key and security certificate. Applicable only if source type is MQTT.
 
 The properties *source_id*, *created_at*, *created_by*, *updated_at*, *updated_by* and *secret* are assigned by the Teradata Listener API at the moment of creation and are __Read-Only__.
 
@@ -215,7 +215,7 @@ Code | Meaning
 
 ## Create a Source
 
-To create a new Source, provide a JSON object of the properties for the new source. If read-only properties are supplied, they will be ignored.
+To create a new Source, provide a JSON object of the properties for the new source. Read-only properties are ignored.
 
 **Note:** MQTT sources have been validated against ActiveMQ 5.14.0 and Mosquitto 1.3.4.
 
@@ -254,7 +254,9 @@ curl \
     "source_type": "MQTT",
     "subscription_info": {
       "broker": "http://localhost:1234",
-      "topic": "My MQTT topic"
+      "topic": "My MQTT topic",
+      "certificate": "-----BEGIN CERTIFICATE-----\nMIID...",
+      "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIE..."
     }
   }' \
   -i \
@@ -306,7 +308,9 @@ Content-Type: application/json
   "source_type": "MQTT",
   "subscription_info": {
     "broker": "http://localhost:1234",
-    "topic": "My MQTT topic"
+    "topic": "My MQTT topic",
+    "certificate": "-----BEGIN CERTIFICATE-----\nMIID...",
+    "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIE..."
   }
 }
 ```
@@ -321,7 +325,7 @@ Code | Meaning
 
 ## Update a Source
 
-To update a source, send a JSON object with updated values for one or more of the __writable__ source properties.  If read-only fields are supplied, they will be ignored. All property values from the previous version of this source are carried over by default, if not included in the hash.
+To update a source, send a JSON object with updated values for one or more of the __writable__ source properties.  Read-only fields are ignored. All property values from the previous version of this source are carried over by default, if not included in the hash.
 
 #### Definition
 
@@ -422,7 +426,7 @@ Content-Type: application/json
   "name": "My source",
   "description": "A superb source",
   "state": 1,
-  "production": false
+  "production": false,
   "source_type": "MQTT",
   "subscription_info": {
     "broker": "http://localhost:1234",
@@ -442,7 +446,7 @@ Code | Meaning
 
 ## Regenerate Source Secret Key
 
-The source secret key is a private key to ensure only the desired data is ingested for a source. If the secret key is compromised, you can regenerate the secret key to replace the existing key.
+The source secret key is a private key that ensures only the desired data is ingested for a source. If the secret key is compromised, you can regenerate the secret key to replace the existing key.
 Note that the source secret key is only available for REST sources (source_type of "REST" or null).
 
 #### Definition
