@@ -26,7 +26,7 @@ secret      | string  | `f8a9f620-e0e6-470b-a6b8-1f16b003c034` | Secret key used
 state       | string  | `1` | State of the source, enabled or disabled.
 production  | boolean | `false` | Production state of the source, which is set to true when an assigned target is locked.
 source_type | string  | `REST` | Type of the source, REST or MQTT. No value defaults to REST.
-subscription_info | object | `{"broker": "http://localhost:1234", "topic": "My MQTT topic"}` | MQTT subscription information containing broker URL and topic. Applicable only if source type is MQTT.
+subscription_info | object | `{"broker": "ssl://localhost:8883", "topic": "My MQTT topic", "private_key" : \"XX...\", "certificate : \"YY...\"}` | MQTT subscription information containing broker URL, topic and optionally a private key and security certificate. Applicable only if source type is MQTT.
 
 The properties *source_id*, *created_at*, *created_by*, *updated_at*, *updated_by* and *secret* are assigned by the Teradata Listener API at the moment of creation and are __Read-Only__.
 
@@ -254,7 +254,9 @@ curl \
     "source_type": "MQTT",
     "subscription_info": {
       "broker": "http://localhost:1234",
-      "topic": "My MQTT topic"
+      "topic": "My MQTT topic",
+      "certificate": "-----BEGIN CERTIFICATE-----\nMIID...",
+      "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIE..."
     }
   }' \
   -i \
@@ -306,7 +308,9 @@ Content-Type: application/json
   "source_type": "MQTT",
   "subscription_info": {
     "broker": "http://localhost:1234",
-    "topic": "My MQTT topic"
+    "topic": "My MQTT topic",
+    "certificate": "-----BEGIN CERTIFICATE-----\nMIID...",
+    "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIE..."
   }
 }
 ```
@@ -422,7 +426,7 @@ Content-Type: application/json
   "name": "My source",
   "description": "A superb source",
   "state": 1,
-  "production": false
+  "production": false,
   "source_type": "MQTT",
   "subscription_info": {
     "broker": "http://localhost:1234",
