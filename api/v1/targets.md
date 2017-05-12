@@ -881,9 +881,9 @@ Code | Meaning
 
 ## Retrieve Dead Letter records
 
-If a target has been configured to store bad records in a ```dead letter queue``` then you can retrieve the bad records through the API.
+If a target has been configured to store bad records in a ```dead letter queue```, you can retrieve the bad records through the API.
 
-This functionality is currently restricted to the owner of the target and the system admin user.
+This function is currently restricted to the target owner and the system admin user.
 
 #### Definition
 
