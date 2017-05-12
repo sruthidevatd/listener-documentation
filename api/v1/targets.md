@@ -13,6 +13,7 @@ Targets are the entities that process a stream from a source and manage how that
 * [Pause a Target](#pause-a-target)
 * [Get Target Status](#get-target-status)
 * [Validate a Target](#validate-a-target)
+* [Retrieve Count of Dead Letter Records](#retrieve-count-of-dead-letter-records)
 * [Retrieve Dead Letter Records](#retrieve-dead-letter-records)
 
 ## Target Object
@@ -848,11 +849,41 @@ Code | Meaning
 400  | Validation failed due to missing or incorrect details.
 401_STATUS
 
-## Retrieve Dead Letter records
+## Retrieve Count of Dead Letter records
 
-If a target has been configured to store bad records in a ```dead letter queue``` then you can retrieve the bad records through the API.
+If a target has been configured to store bad records in a ```dead letter queue``` then you can retrieve the number of records held in the queue through the API.
 
 This functionality is currently restricted to the owner of the target and the system admin user.
+
+#### Definition
+
+```http
+GET https://listener-app-services.teradata.com/v1/targets/{target_id}/dead-letter-queue/count HTTP/1.1
+```
+
+#### Example Response
+
+```http
+HTTP/1.1 200 OK
+```
+```json
+{
+  "count" : 42
+}
+```
+
+#### Response Codes
+
+Code | Meaning
+---- | -------
+200  | Successfully retrieved record count
+403  | User does not have permission to retrieve record count
+
+## Retrieve Dead Letter records
+
+If a target has been configured to store bad records in a ```dead letter queue```, you can retrieve the bad records through the API.
+
+This function is currently restricted to the target owner and the system admin user.
 
 #### Definition
 
@@ -860,7 +891,7 @@ This functionality is currently restricted to the owner of the target and the sy
 GET https://listener-app-services.teradata.com/v1/targets/{target_id}/dead-letter-queue/records HTTP/1.1
 ```
 
-### Example Response
+#### Example Response
 
 ```http
 HTTP/1.1 200 OK
@@ -871,7 +902,7 @@ HTTP/1.1 200 OK
 ]
 ```
 
-### Response Codes
+#### Response Codes
 
 Code | Meaning
 ---- | -------
