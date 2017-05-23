@@ -898,7 +898,13 @@ HTTP/1.1 200 OK
 ```
 ```json
 [
-  "{\"missing_json_value\" : }"
+  {
+    "data": "{\"property\" : \"value\"",
+    "date": "2017-05-18 11:23:48",
+    "error_code": -7548,
+    "error_reason": "Invalid JSON data: Expected something like whitespace or '}' or ']' or ',' between '\"' and the end of the string.",
+    "uuid": "07e29abf-1e90-4327-9fd0-2769127fc69f"
+  }
 ]
 ```
 
