@@ -15,6 +15,7 @@ Targets are the entities that process a stream from a source and manage how that
 * [Validate a Target](#validate-a-target)
 * [Retrieve Count of Dead Letter Records](#retrieve-count-of-dead-letter-records)
 * [Retrieve Dead Letter Records](#retrieve-dead-letter-records)
+* [Clear Dead Letter Queue](#clear-dead-letter-queue)
 
 ## Target Object
 
@@ -914,3 +915,36 @@ Code | Meaning
 ---- | -------
 200  | Successfully retrieved records
 403  | User does not have permission to retrieve records
+
+## Clear Dead Letter Queue
+
+If a target has been configured to store bad records in a ```dead letter queue```, you can clear the dead letter queue through the API.
+
+This function is currently restricted to the target owner and the system admin user.
+
+#### Definition
+
+```http
+DELETE https://listener-app-services.teradata.com/v1/targets/{target_id}/dead-letter-queue HTTP/1.1
+```
+
+#### Example Response
+
+```http
+HTTP/1.1 200 OK
+```
+```json
+[
+  {
+    "message": "Topic cleared successfully",
+    "success": true
+  }
+]
+```
+
+#### Response Codes
+
+Code | Meaning
+---- | -------
+200  | Successfully cleared the dead letter queue
+403  | User does not have permission to clear the dead letter queue
