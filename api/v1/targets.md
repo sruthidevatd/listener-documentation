@@ -885,26 +885,52 @@ If a target has been configured to store bad records in a ```dead letter queue``
 
 This function is currently restricted to the target owner and the system admin user.
 
+To provide a responsive API and limit memory usage the contents of the dead letter queue are returned in "pages". By default the API will returns the first page of records (50 records), to access additional pages you need to provide the desired ```page``` as a query parameter.
+
 #### Definition
+
+Retrieve the first page of records
 
 ```http
 GET https://listener-app-services.teradata.com/v1/targets/{target_id}/dead-letter-queue/records HTTP/1.1
 ```
 
+Retrieve the second page of records
+
+```http
+GET https://listener-app-services.teradata.com/v1/targets/{target_id}/dead-letter-queue/records?page=2 HTTP/1.1
+```
+
 #### Example Response
+
+The headers in the response tell us how many pages of records are available  (```X-Total-Pages```).
 
 ```http
 HTTP/1.1 200 OK
+X-Length: 2
+X-Page: 1
+X-Total: 2
+X-Total-Pages: 1
 ```
+
+The body of the response is an array of ```JSON``` objects detailing the bad record (```"data"```), the reason for the record being bad (```"error_reason"``` and ```"error_code"```) along with the record identifier in Listener (```"uuid"```) and time of ingest (```"date"```).
+
 ```json
 [
-  {
-    "data": "{\"property\" : \"value\"",
-    "date": "2017-05-18 11:23:48",
-    "error_code": -7548,
-    "error_reason": "Invalid JSON data: Expected something like whitespace or '}' or ']' or ',' between '\"' and the end of the string.",
-    "uuid": "07e29abf-1e90-4327-9fd0-2769127fc69f"
-  }
+   {
+      "error_reason" : "[Teradata Database] [TeraJDBC 15.10.00.22] [Error 7548] [SQLState HY000] Invalid JSON data: Expected something like whitespace or '}' or ']' or ',' between '\"' and the end of the string. Make sure data was not truncated.",
+      "uuid" : "49a13591-f7bb-4bb2-ab29-68f9a50bcbe8",
+      "date" : "2017-06-05 14:58:13",
+      "data" : "{\"name\":\"Jack Napier\", \"supername\":\"Joker\"  ",
+      "error_code" : -7548
+   },
+   {
+      "uuid" : "adb47637-17c9-43c8-b7e3-5ed5189477f9",
+      "date" : "2017-06-06 10:30:11",
+      "error_code" : -7548,
+      "error_reason" : "[Teradata Database] [TeraJDBC 15.10.00.22] [Error 7548] [SQLState HY000] Invalid JSON data: Expected something like whitespace or '}' or ']' or ',' between '\"' and '\"' at character position 46. Make sure data was not truncated.",
+      "data" : "{\"name\":\"Edward Nigma\", \"supername\":\"Riddler\" \"Bats\"  "
+   }
 ]
 ```
 
